@@ -5,6 +5,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: echo "The job was automatically triggered by a ${{github.event_name}} event."
+      - name: Check the repository code
+        run: actions/checkout@v2
       - name: List files in the repository
         run: |
           ls -la ${{github.workspace}}
