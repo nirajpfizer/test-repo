@@ -10,3 +10,7 @@ jobs:
       - name: List files in the repository
         run: |
           ls -la ${{github.workspace}}
+  Test-Another-Job:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Hello World from another job"
