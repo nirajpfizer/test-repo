@@ -3,7 +3,12 @@ name: Test Workflow
 on: [push]
 
 jobs:
+  pre-build:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Hello world"
   Test-Workflow:
     runs-on: ubuntu-latest
+    needs: pre-build
     steps:
       - run: echo "Hello World"
