@@ -6,4 +6,3 @@ updates:
     schedule:
       # check daily
       interval: "daily"
-
