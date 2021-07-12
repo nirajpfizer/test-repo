@@ -9,7 +9,7 @@ jobs:
     steps:
       - name: Hello world action step
         id: hello
-        uses: actions/test-repo@v1
+        uses: nirajpfizer/test-repo@v1
         with:
           who-to-greet: 'Duck'
       - name: Get the output time
