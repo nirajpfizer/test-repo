@@ -1,0 +1,16 @@
+name: 'Dodo Duck'
+
+on: [push]
+
+jobs:
+  dodo_duck_job:
+    runs-on: ubuntu-latest
+    name: A job to stay dodo duck
+    steps:
+      - name: Hello world action step
+        id: hello
+        uses: actions/test-repo@v1
+        with:
+          who-to-greet: 'Duck'
+      - name: Get the output time
+        run: echo "The time was ${{steps.hello.outputs.time}}"
