@@ -1,0 +1,39 @@
+name: Testing
+on: push
+jobs:
+  testing:
+    name: Automated tests
+    runs-on: ubuntu-latest
+    # Docker image that job executes in.
+    container:
+      image: docker.pkg.github.com/pfizer/edison_docker_base_testing/edison-testing:latest-legacy
+      credentials:
+        username: ${{ secrets.EDISON_GH_TESTING_USER }}
+        password: ${{ secrets.EDISON_GH_TESTING_TOKEN }}
+    services:
+      mysql:
+        image: mysql:5.7
+        env:
+          MYSQL_ALLOW_EMPTY_PASSWORD: 'true'
+          MYSQL_DATABASE: 'drupal'
+    steps:
+      -
+        name: "Start httpd and php-fpm7 services"
+        run: /usr/local/bin/httpd-foreground &
+      -
+        name: Checkout local repo
+        uses: actions/checkout@v2
+      - 
+        name: Checkout Pfizer Edison GitHub Action Repo
+        uses: actions/checkout@v2
+        with:
+          repository: pfizer/edison_actions_legacy
+          ref: '1.x'
+          token: ${{ secrets.EDISON_GH_TESTING_TOKEN }}
+          path: .github/actions/edison_actions_legacy
+      -
+        name: Run tests
+        uses: ./.github/actions/edison_actions_legacy/actions/run-tests
+        with:
+          repo-type: 'module'
+          ssh-prv-key: ${{ secrets.EDISON_GH_TESTING_SSH_PRIVATE_KEY }}
